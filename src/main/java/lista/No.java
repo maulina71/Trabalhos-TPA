@@ -6,7 +6,7 @@
 
 // CODIGO FORNECIDO NA ESPECIFICAÇÃO
 
-package listaencadeada;
+package lista;
 
 /**
  *
