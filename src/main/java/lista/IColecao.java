@@ -6,7 +6,7 @@
 
 /* PEGAMOS ESSE CÓDIGO NO GITHUB DISPONIBILIZADO*/
 
-package listaencadeada;
+package lista;
 
 /**
  *
