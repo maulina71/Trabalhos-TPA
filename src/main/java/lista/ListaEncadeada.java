@@ -1,4 +1,4 @@
-package listaencadeada;
+package lista;
 
 public class ListaEncadeada<T> implements IColecao<T>{
     private No<T> prim;
