@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.Scanner;
 
-public class ProgramaContatos {
+public class progTeste {
 
     private final Scanner scanner = new Scanner(System.in);
     private final Comparator<Contato> comparadorPorNome = 
@@ -23,7 +23,7 @@ public class ProgramaContatos {
     private IColecao<Contato> listaPorTelefone;
 
     public static void main(String[] args) {
-        new ProgramaContatos().executar();
+        new progTeste().executar();
     }
 
     private void executar() {
