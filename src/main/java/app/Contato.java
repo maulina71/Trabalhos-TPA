@@ -1,9 +1,9 @@
 package app;
 
 /**
- * Classe de domínio que representa um contato.
  * Cada contato possui nome e telefone.
  */
+
 public class Contato {
     
     private String nome;
@@ -52,9 +52,9 @@ public class Contato {
     }
     
     /**
-     * Sobrescreve o método toString para retornar nome-telefone
      * @return String no formato "nome-telefone"
      */
+    
     @Override
     public String toString() {
         return nome + "," + telefone;
