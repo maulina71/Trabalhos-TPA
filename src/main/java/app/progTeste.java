@@ -1,7 +1,7 @@
 package app;
 
-import lista.IColecao;
-import lista.ListaEncadeada;
+import colecao.IColecao;
+import colecao.ListaEncadeada;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,21 +9,17 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.Scanner;
 
-public class progTeste {
+public class ProgramaContatos {
 
     private final Scanner scanner = new Scanner(System.in);
-    private final Comparator<Contato> comparadorPorNome = 
-    (c1, c2) -> c1.getNome().compareToIgnoreCase(c2.getNome());
-
-    private final Comparator<Contato> comparadorPorTelefone = 
-    (c1, c2) -> c1.getTelefone().compareTo(c2.getTelefone());
-    
+    private final Comparator<Contato> comparadorPorNome = Comparator.comparing(Contato::getNome);
+    private final Comparator<Contato> comparadorPorTelefone = Comparator.comparing(Contato::getTelefone);
 
     private IColecao<Contato> listaPorNome;
     private IColecao<Contato> listaPorTelefone;
 
     public static void main(String[] args) {
-        new progTeste().executar();
+        new ProgramaContatos().executar();
     }
 
     private void executar() {
@@ -105,7 +101,7 @@ public class progTeste {
                 String nome = partes[0].trim();
                 String telefone = partes[1].trim();
 
-                if (listaPorTelefone.pesquisar(new Contato("", telefone)) != null) {
+                if (listaPorTelefone.pesquisar(new Contato(null, telefone)) != null) {
                     ignorados++;
                     continue;
                 }
@@ -132,7 +128,7 @@ public class progTeste {
         System.out.print("Telefone: ");
         String telefone = scanner.nextLine().trim();
 
-        if (listaPorTelefone.pesquisar(new Contato("", telefone)) != null) {
+        if (listaPorTelefone.pesquisar(new Contato(null, telefone)) != null) {
             System.out.println("Já existe um contato com esse telefone.");
             return;
         }
@@ -148,7 +144,7 @@ public class progTeste {
         String nome = scanner.nextLine().trim();
 
         long inicio = System.nanoTime();
-        Contato encontrado = listaPorNome.pesquisar(new Contato(nome, ""));
+        Contato encontrado = listaPorNome.pesquisar(new Contato(nome, null));
         long fim = System.nanoTime();
 
         if (encontrado != null) {
@@ -164,7 +160,7 @@ public class progTeste {
         String telefone = scanner.nextLine().trim();
 
         long inicio = System.nanoTime();
-        Contato encontrado = listaPorTelefone.pesquisar(new Contato("", telefone));
+        Contato encontrado = listaPorTelefone.pesquisar(new Contato(null, telefone));
         long fim = System.nanoTime();
 
         if (encontrado != null) {
@@ -179,10 +175,10 @@ public class progTeste {
         System.out.print("Telefone: ");
         String telefone = scanner.nextLine().trim();
 
-        Contato alvo = listaPorTelefone.pesquisar(new Contato("", telefone));
+        Contato alvo = listaPorTelefone.pesquisar(new Contato(null, telefone));
 
         long inicio = System.nanoTime();
-        boolean removidoDaListaPorTelefone = listaPorTelefone.remover(new Contato("", telefone));
+        boolean removidoDaListaPorTelefone = listaPorTelefone.remover(new Contato(null, telefone));
         long fim = System.nanoTime();
 
         if (removidoDaListaPorTelefone && alvo != null) {
@@ -198,7 +194,7 @@ public class progTeste {
         System.out.print("Nome atual do contato: ");
         String nomeAtual = scanner.nextLine().trim();
 
-        Contato encontrado = listaPorNome.pesquisar(new Contato(nomeAtual, ""));
+        Contato encontrado = listaPorNome.pesquisar(new Contato(nomeAtual, null));
         if (encontrado == null) {
             System.out.println("Contato não encontrado.");
             return;
@@ -212,7 +208,7 @@ public class progTeste {
         String novoTelefone = scanner.nextLine().trim();
 
         if (!novoTelefone.equals(encontrado.getTelefone())
-                && listaPorTelefone.pesquisar(new Contato("", novoTelefone)) != null) {
+                && listaPorTelefone.pesquisar(new Contato(null, novoTelefone)) != null) {
             System.out.println("Já existe outro contato com esse telefone. Alteração cancelada.");
             return;
         }
