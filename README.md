@@ -37,39 +37,30 @@ README.md # Este arquivo
 
 
 ## Como Compilar e Executar
-
 ### Pré-requisitos
 - Java JDK 8 ou superior
 
 ### Compilação
 No terminal, dentro da pasta raiz do projeto:
-
-```bash
 javac -d . src/main/java/lista/*.java src/main/java/app/*.java
 
 **### Execução**
-
-java app.progPrincipal
+java app.progTeste
 
 **Funcionalidades do Programa**
 Ao iniciar, o programa pergunta se você deseja uma lista ordenada (S)
 ou não ordenada (N). Em seguida, exibe um menu com as opções:
+-Carregar dados de arquivo: Lê o arquivo entrada.txt e insere os contatos
+-Adicionar contato: Solicita nome e telefone de um novo contato
+-Pesquisar contato por nome: Busca e exibe o telefone
+-Pesquisar contato por telefone: Busca e exibe o nome
+-Remover contato por telefone: Remove um contato
+-Alterar dados de contato: Altera nome e telefone
+-Sair: Exibe a quantidade total e encerra
 
-Carregar dados de arquivo: Lê o arquivo entrada.txt e insere os contatos
-
-Adicionar contato: Solicita nome e telefone de um novo contato
-
-Pesquisar contato por nome: Busca e exibe o telefone
-
-Pesquisar contato por telefone: Busca e exibe o nome
-
-Remover contato por telefone: Remove um contato
-
-Alterar dados de contato: Altera nome e telefone
-
-Sair: Exibe a quantidade total e encerra
-
-
-
+**Estrutura de Dados Utilizada**
+O programa usa duas listas encadeadas:
+-listaPorNome: indexada por nome
+-listaPorTelefone: indexada por telefone
 
 
