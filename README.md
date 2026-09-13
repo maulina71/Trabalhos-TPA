@@ -36,5 +36,21 @@ README.md # Este arquivo
 
 
 
+## Como Compilar e Executar
+
+### Pré-requisitos
+- Java JDK 8 ou superior
+
+### Compilação
+No terminal, dentro da pasta raiz do projeto:
+
+```bash
+javac -d . src/main/java/lista/*.java src/main/java/app/*.java
+
+### Execução
+
+java app.progTeste
+
+
 
 
