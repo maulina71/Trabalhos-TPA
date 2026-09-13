@@ -34,7 +34,7 @@ public class ListaEncadeada<T> implements IColecao<T> {
         
         // Lista não ordenada: insere no início
         if (!ordenada) {
-            novoNo.setProximo(prim);
+            novoNo.setProx(prim);
             prim = novoNo;
             tamanho++;
             return;
@@ -44,7 +44,7 @@ public class ListaEncadeada<T> implements IColecao<T> {
         
         // Caso 1: lista vazia ou novo valor menor que o primeiro
         if (prim == null || comparador.compare(novoValor, prim.getValor()) <= 0) {
-            novoNo.setProximo(prim);
+            novoNo.setProx(prim);
             prim = novoNo;
             tamanho++;
             return;
@@ -52,13 +52,13 @@ public class ListaEncadeada<T> implements IColecao<T> {
         
         // Caso 2: procura a posição correta
         No<T> atual = prim;
-        while (atual.getProximo() != null 
-                && comparador.compare(novoValor, atual.getProximo().getValor()) > 0) {
-            atual = atual.getProximo();
+        while (atual.getProx() != null 
+                && comparador.compare(novoValor, atual.getProx().getValor()) > 0) {
+            atual = atual.getProx();
         }
         
-        novoNo.setProximo(atual.getProximo());
-        atual.setProximo(novoNo);
+        novoNo.setProx(atual.getProx());
+        atual.setProx(novoNo);
         tamanho++;
     }
     
@@ -82,7 +82,7 @@ public class ListaEncadeada<T> implements IColecao<T> {
                 return null;
             }
             
-            atual = atual.getProximo();
+            atual = atual.getProx();
         }
         
         return null;
@@ -103,9 +103,9 @@ public class ListaEncadeada<T> implements IColecao<T> {
             if (cmp == 0) {
                 // Encontrou: remove o nó
                 if (anterior == null) {
-                    prim = atual.getProximo();
+                    prim = atual.getProx();
                 } else {
-                    anterior.setProximo(atual.getProximo());
+                    anterior.setProx(atual.getProx());
                 }
                 tamanho--;
                 return true;
@@ -117,7 +117,7 @@ public class ListaEncadeada<T> implements IColecao<T> {
             }
             
             anterior = atual;
-            atual = atual.getProximo();
+            atual = atual.getProx();
         }
         
         return false;
@@ -144,10 +144,10 @@ public class ListaEncadeada<T> implements IColecao<T> {
         
         while (atual != null) {
             sb.append(atual.getValor());
-            if (atual.getProximo() != null) {
+            if (atual.getProx() != null) {
                 sb.append(",");
             }
-            atual = atual.getProximo();
+            atual = atual.getProx();
         }
         
         sb.append("]");
