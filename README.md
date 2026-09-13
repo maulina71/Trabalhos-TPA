@@ -47,9 +47,28 @@ No terminal, dentro da pasta raiz do projeto:
 ```bash
 javac -d . src/main/java/lista/*.java src/main/java/app/*.java
 
-### Execução
+**### Execução**
 
-java app.progTeste
+java app.progPrincipal
+
+**Funcionalidades do Programa**
+Ao iniciar, o programa pergunta se você deseja uma lista ordenada (S)
+ou não ordenada (N). Em seguida, exibe um menu com as opções:
+
+Carregar dados de arquivo: Lê o arquivo entrada.txt e insere os contatos
+
+Adicionar contato: Solicita nome e telefone de um novo contato
+
+Pesquisar contato por nome: Busca e exibe o telefone
+
+Pesquisar contato por telefone: Busca e exibe o nome
+
+Remover contato por telefone: Remove um contato
+
+Alterar dados de contato: Altera nome e telefone
+
+Sair: Exibe a quantidade total e encerra
+
 
 
 
