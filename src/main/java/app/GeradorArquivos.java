@@ -30,13 +30,13 @@ public class GeradorArquivos {
     
     private static void gerarArquivo(int quantidade) {
         String nomeArquivo = "entrada_" + quantidade + ".txt";
-        Random random = new Random(42); // seed fixo para reprodutibilidade
+        Random random = new Random(42);
         
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivo))) {
             for (int i = 0; i < quantidade; i++) {
                 String nome = NOMES[random.nextInt(NOMES.length)] + " " 
                             + SOBRENOMES[random.nextInt(SOBRENOMES.length)];
-                String telefone = String.format("%09d", i); // 000000000, 000000001, ...
+                String telefone = String.format("%09d", i);
                 
                 bw.write(nome + "," + telefone);
                 bw.newLine();
