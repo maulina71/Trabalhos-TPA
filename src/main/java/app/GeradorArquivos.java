@@ -19,13 +19,13 @@ public class GeradorArquivos {
     };
     
     public static void main(String[] args) {
-        int[] tamanhos = {100000, 200000, 400000, 800000};
+        int[] tamanhos = {25000, 50000, 100000, 200000};
         
         for (int tamanho : tamanhos) {
             gerarArquivo(tamanho);
         }
         
-        System.out.println("Arquivos gerados com sucesso!");
+        System.out.println("\nArquivos gerados com sucesso!");
     }
     
     private static void gerarArquivo(int quantidade) {
