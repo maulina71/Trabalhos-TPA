@@ -16,7 +16,7 @@ public class ListaEncadeada<T> implements IColecao<T> {
 /**
      * Construtor da lista encadeada
      * @param comparador Comparator para comparar elementos
-     * @param ordenada true para lista ordenada, false para não ordenada
+     * @param ehOrdenada true para lista ordenada, false para não ordenada
 */ 
     public ListaEncadeada(Comparator<T> comparador, boolean ehOrdenada) {
         this.prim = null;
