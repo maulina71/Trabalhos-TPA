@@ -19,9 +19,9 @@ e empírica de complexidade dos algoritmos.
 ## Estrutura do Projeto
 - src/main/java/
 ├── lista/ # A biblioteca de lista encadeada
-│ ├── IColecao.java # Interface da coleção
-│ ├── No.java # Classe que representa um nó
-│ └── ListaEncadeada.java # Implementação da lista
+├── IColecao.java # Interface da coleção
+├── No.java # Classe que representa um nó
+└── ListaEncadeada.java # Implementação da lista
 └── app/ # Programa de teste
 ├── Contato.java # Classe de domínio (nome e telefone)
 └── ProgramaContatos.java # Programa principal com menu
