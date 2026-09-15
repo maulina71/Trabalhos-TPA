@@ -24,7 +24,8 @@ e empírica de complexidade dos algoritmos.
 │ └── ListaEncadeada.java # Implementação da lista
 └── app/ # Programa de teste
 ├── Contato.java # Classe de domínio (nome e telefone)
-└── progTeste.java # Programa principal com menu
+└── ProgramaContatos.java # Programa principal com menu
+└── GeradorArquivos # programa que gera 4 arquivos de diferentes tamanhos
 
 entrada.txt # Arquivo de dados de exemplo
 README.md # Este arquivo
@@ -50,17 +51,19 @@ java app.progTeste
 **Funcionalidades do Programa**
 Ao iniciar, o programa pergunta se você deseja uma lista ordenada (S)
 ou não ordenada (N). Em seguida, exibe um menu com as opções:
--Carregar dados de arquivo: Lê o arquivo entrada.txt e insere os contatos
--Adicionar contato: Solicita nome e telefone de um novo contato
--Pesquisar contato por nome: Busca e exibe o telefone
--Pesquisar contato por telefone: Busca e exibe o nome
--Remover contato por telefone: Remove um contato
--Alterar dados de contato: Altera nome e telefone
--Sair: Exibe a quantidade total e encerra
+- Carregar dados de arquivo: Lê o arquivo entrada.txt e insere os contatos
+- Adicionar contato: Solicita nome e telefone de um novo contato
+- Pesquisar contato por nome: Busca e exibe o telefone
+- Pesquisar contato por telefone: Busca e exibe o nome
+- Remover contato por telefone: Remove um contato
+- Alterar dados de contato: Altera nome e telefone
+- Sair: Exibe a quantidade total e encerra
 
 **Estrutura de Dados Utilizada**
 O programa usa duas listas encadeadas:
 -listaPorNome: indexada por nome
 -listaPorTelefone: indexada por telefone
 
+**Gerador de arquivos**
+- Gerador automatico de 4 arquivos txt, sendo de tamanhos de 25 mil dados a 200 mil.
 
