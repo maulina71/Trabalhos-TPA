@@ -5,10 +5,10 @@ import java.util.Comparator;
  * @param <T> Tipo genérico dos elementos
 */
 public class ListaEncadeada<T> implements IColecao<T> {
-    private No<T> prim;
-    private int tamanho;
-    private final Comparator<T> comparador;
-    private final boolean ehOrdenada;
+    private No<T> prim;  /** primeiro nó*/ 
+    private int tamanho;  /** contador da lista*/
+    private final Comparator<T> comparador;  /**comparando elementos*/
+    private final boolean ehOrdenada;  /** ve see ordenada ou nao*/
 
     public ListaEncadeada() {
         this(null, false);
