@@ -74,7 +74,7 @@ public class ListaEncadeada<T> implements IColecao<T> {
             if (cmp == 0) {
                 return atual.getValor();
             }
-            // Otimização: se a lista é ordenada e já passou do valor, para
+            // Se a lista é ordenada e já passou do valor, para de procurar.
             if (ehOrdenada && cmp > 0) {
                 return null;
             }
@@ -103,7 +103,7 @@ public class ListaEncadeada<T> implements IColecao<T> {
                 tamanho--;
                 return true;
             }
-            // Otimização: se a lista é ordenada e já passou do valor, para
+            // Se a lista é ordenada e já passou do valor, para
             if (ehOrdenada && cmp > 0) {
                 return false;
             }
