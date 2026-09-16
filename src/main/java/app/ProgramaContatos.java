@@ -100,7 +100,7 @@ public class ProgramaContatos {
     // operação (leitura do arquivo + montagem das listas), como pede a
     // especificação do trabalho.
     private void carregarArquivo() {
-        long inicio = System.nanoTime();
+        long inicio = System.nanoTime();  //* Marca o tempo inicial e zera os contadores
         int lidos = 0;
         int ignorados = 0;
 
@@ -110,7 +110,7 @@ public class ProgramaContatos {
             String linha;
             while ((linha = br.readLine()) != null) {
                 linha = linha.trim();
-                if (linha.isEmpty()) {
+                if (linha.isEmpty()) { //*verifica se string é vazia
                     continue;
                 }
 
@@ -145,7 +145,7 @@ public class ProgramaContatos {
             return;
         }
 
-        long fim = System.nanoTime();
+        long fim = System.nanoTime(); //* marca o tempo final
         // Esses números vão direto para as tabelas/gráficos da seção 3 do relatório.
         System.out.println("Contatos carregados: " + lidos);
         System.out.println("Linhas ignoradas (formato inválido ou telefone duplicado): " + ignorados);
@@ -180,7 +180,7 @@ public class ProgramaContatos {
 
         // Cronometra só a chamada de pesquisar, que é a operação que o
         // enunciado pede para medir.
-        long inicio = System.nanoTime();
+        long inicio = System.nanoTime(); 
         Contato encontrado = listaPorNome.pesquisar(new Contato(nome, ""));
         long fim = System.nanoTime();
 
