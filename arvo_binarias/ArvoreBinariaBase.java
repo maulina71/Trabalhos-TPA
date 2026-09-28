@@ -1,3 +1,7 @@
+/**
+ * @author victoriocarvalho
+ */
+
 package arvorebinaria;
 
 import java.util.Comparator;
