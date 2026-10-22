@@ -1,6 +1,8 @@
 package app;
 
-import lista.IColecao;
+import colecao.IColecao;
+import arvorebinaria.ArvoreBinaria;
+import arvorebinaria.ArvoreAVL;
 import lista.ListaEncadeada;
 
 import java.io.BufferedReader;
