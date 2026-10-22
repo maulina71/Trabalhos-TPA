@@ -11,12 +11,16 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.Scanner;
 
-// Programa que usa a biblioteca ListaEncadeada (pacote "lista") para
-// gerenciar uma agenda de contatos via menu no console.
+// Programa que usa as bibliotecas do projeto (lista encadeada e árvore
+// binária) para gerenciar uma agenda de contatos via menu no console.
 //
 // Mantemos duas coleções (IColecao<Contato>) guardando os mesmos objetos
 // Contato: uma organizada por nome e outra por telefone. Assim conseguimos
 // pesquisar rapidamente dos dois jeitos sem precisar alterar a biblioteca.
+//
+// A estrutura concreta usada (lista ordenada, lista não ordenada ou árvore
+// binária) é escolhida pelo usuário no início. O resto do programa não muda,
+// porque todas implementam a mesma interface IColecao<T>.
 public class ProgramaContatos {
 
     private final Scanner scanner = new Scanner(System.in);
@@ -38,12 +42,11 @@ public class ProgramaContatos {
         new ProgramaContatos().executar();
     }
 
-    // Pergunta o modo de operação, instancia as duas listas nesse mesmo
+    // Pergunta o modo de operação, instancia as duas coleções nesse mesmo
     // modo e mantém o menu rodando até o usuário escolher sair.
     private void executar() {
-        boolean ordenada = perguntarSeOrdenada();
-        listaPorNome = new ListaEncadeada<>(comparadorPorNome, ordenada);
-        listaPorTelefone = new ListaEncadeada<>(comparadorPorTelefone, ordenada);
+        int modo = perguntarModo();
+        criarEstruturas(modo);
 
         boolean rodando = true;
         while (rodando) {
@@ -79,10 +82,50 @@ public class ProgramaContatos {
         }
     }
 
-    private boolean perguntarSeOrdenada() {
-        System.out.print("Deseja usar lista ordenada? (S/N): ");
+    // Pergunta qual estrutura será usada (tópico 2 do enunciado).
+    private int perguntarModo() {
+        System.out.println("Escolha o tipo de estrutura:");
+        System.out.println("1 - Lista ordenada");
+        System.out.println("2 - Lista não ordenada");
+        System.out.println("3 - Árvore binária");
+        System.out.println("4 - Árvore AVL");
+        System.out.print("Opção: ");
         String resposta = scanner.nextLine().trim();
-        return resposta.equalsIgnoreCase("S");
+        try {
+            return Integer.parseInt(resposta);
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida, usando lista ordenada por padrão.");
+            return 1;
+        }
+    }
+
+    // Instancia as duas coleções de acordo com o modo escolhido.
+    // As duas guardam os MESMOS objetos Contato (é o mesmo objeto
+    // compartilhado entre elas) — só mudam o critério de comparação e a
+    // estrutura interna.
+    private void criarEstruturas(int modo) {
+        switch (modo) {
+            case 2:
+                listaPorNome = new ListaEncadeada<>(comparadorPorNome, false);
+                listaPorTelefone = new ListaEncadeada<>(comparadorPorTelefone, false);
+                System.out.println("Usando listas encadeadas NÃO ordenadas.");
+                break;
+            case 3:
+                listaPorNome = new ArvoreBinaria<>(comparadorPorNome);
+                listaPorTelefone = new ArvoreBinaria<>(comparadorPorTelefone);
+                System.out.println("Usando árvores binárias de busca.");
+                break;
+                case 4:                          
+                    listaPorNome = new ArvoreAVL<>(comparadorPorNome);
+                    listaPorTelefone = new ArvoreAVL<>(comparadorPorTelefone);
+                    System.out.println("Usando árvores AVL.");
+                break;
+            case 1:
+            default:
+                listaPorNome = new ListaEncadeada<>(comparadorPorNome, true);
+                listaPorTelefone = new ListaEncadeada<>(comparadorPorTelefone, true);
+                System.out.println("Usando listas encadeadas ordenadas.");
+        }
     }
 
     private void exibirMenu() {
@@ -97,22 +140,26 @@ public class ProgramaContatos {
         System.out.print("Escolha uma opção: ");
     }
 
-    // Lê "entrada.txt" (uma linha por contato, no formato "nome,telefone")
-    // e insere cada contato válido nas duas listas. Mede o tempo total da
-    // operação (leitura do arquivo + montagem das listas), como pede a
-    // especificação do trabalho.
+    // Pede o nome do arquivo ao usuário e carrega os contatos.
+    // Formato esperado: uma linha por contato, no formato "nome,telefone".
+    //
+    // Mede o tempo total da operação (leitura do arquivo + montagem das
+    // estruturas), como pede a especificação do trabalho.
     private void carregarArquivo() {
-        long inicio = System.nanoTime();  //* Marca o tempo inicial e zera os contadores
+        System.out.print("Nome do arquivo: ");
+        String nomeArquivo = scanner.nextLine().trim();
+
+        long inicio = System.nanoTime();
         int lidos = 0;
         int ignorados = 0;
 
         // try-with-resources garante que o arquivo é fechado no final,
         // mesmo se ocorrer um erro no meio da leitura.
-        try (BufferedReader br = new BufferedReader(new FileReader("entrada.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo))) {
             String linha;
             while ((linha = br.readLine()) != null) {
                 linha = linha.trim();
-                if (linha.isEmpty()) { //*verifica se string é vazia
+                if (linha.isEmpty()) {
                     continue;
                 }
 
@@ -127,7 +174,7 @@ public class ProgramaContatos {
                 String telefone = partes[1].trim();
 
                 // Checa se o telefone já está em uso antes de adicionar. Essa
-                // regra é do programa, não da lista — a lista aceitaria
+                // regra é do programa, não da estrutura — a estrutura aceitaria
                 // duplicados sem problema. Usamos "" no lugar do nome porque
                 // o comparadorPorTelefone não olha esse campo.
                 if (listaPorTelefone.pesquisar(new Contato("", telefone)) != null) {
@@ -135,7 +182,7 @@ public class ProgramaContatos {
                     continue;
                 }
 
-                // Contato válido: cria o objeto e adiciona nas duas listas
+                // Contato válido: cria o objeto e adiciona nas duas coleções
                 // (é o mesmo objeto compartilhado entre elas).
                 Contato contato = new Contato(nome, telefone);
                 listaPorNome.adicionar(contato);
@@ -143,15 +190,16 @@ public class ProgramaContatos {
                 lidos++;
             }
         } catch (IOException e) {
-            System.out.println("Não foi possível ler o arquivo entrada.txt: " + e.getMessage());
+            System.out.println("Não foi possível ler " + nomeArquivo + ": " + e.getMessage());
             return;
         }
 
-        long fim = System.nanoTime(); //* marca o tempo final
+        long fim = System.nanoTime();
         // Esses números vão direto para as tabelas/gráficos da seção 3 do relatório.
         System.out.println("Contatos carregados: " + lidos);
         System.out.println("Linhas ignoradas (formato inválido ou telefone duplicado): " + ignorados);
-        System.out.printf("Tempo de leitura e montagem da(s) lista(s): %.3f ms%n", (fim - inicio) / 1_000_000.0);
+        System.out.printf("Tempo de leitura e montagem da(s) estrutura(s): %.3f ms%n",
+                (fim - inicio) / 1_000_000.0);
     }
 
     // Pede nome e telefone e adiciona um novo contato, desde que o
@@ -173,16 +221,16 @@ public class ProgramaContatos {
         System.out.println("Contato adicionado com sucesso.");
     }
 
-    // Busca um contato pelo nome na listaPorNome. Se houver mais de um
-    // contato com o mesmo nome, apenas um deles é retornado — comportamento
-    // aceito pela especificação do trabalho.
+    // Busca um contato pelo nome na coleção indexada por nome. Se houver
+    // mais de um contato com o mesmo nome, apenas um deles é retornado —
+    // comportamento aceito pela especificação do trabalho.
     private void pesquisarPorNome() {
         System.out.print("Nome: ");
         String nome = scanner.nextLine().trim();
 
         // Cronometra só a chamada de pesquisar, que é a operação que o
         // enunciado pede para medir.
-        long inicio = System.nanoTime(); 
+        long inicio = System.nanoTime();
         Contato encontrado = listaPorNome.pesquisar(new Contato(nome, ""));
         long fim = System.nanoTime();
 
@@ -194,7 +242,7 @@ public class ProgramaContatos {
         System.out.printf("Tempo de busca: %.3f ms%n", (fim - inicio) / 1_000_000.0);
     }
 
-    // Mesma lógica de pesquisarPorNome, usando a listaPorTelefone.
+    // Mesma lógica de pesquisarPorNome, usando a coleção indexada por telefone.
     private void pesquisarPorTelefone() {
         System.out.print("Telefone: ");
         String telefone = scanner.nextLine().trim();
@@ -212,16 +260,16 @@ public class ProgramaContatos {
     }
 
     // Remove um contato pelo telefone. Localizamos o objeto antes de
-    // cronometrar, para depois conseguir removê-lo também da listaPorNome.
+    // cronometrar, para depois conseguir removê-lo também da coleção por nome.
     private void removerPorTelefone() {
         System.out.print("Telefone: ");
         String telefone = scanner.nextLine().trim();
 
         Contato alvo = listaPorTelefone.pesquisar(new Contato("", telefone));
 
-        // Só a remoção na listaPorTelefone é cronometrada, já que é essa a
-        // operação pedida pelo enunciado. A remoção na listaPorNome logo
-        // abaixo é apenas para manter as duas listas consistentes.
+        // Só a remoção na coleção por telefone é cronometrada, já que é essa a
+        // operação pedida pelo enunciado. A remoção na coleção por nome logo
+        // abaixo é apenas para manter as duas estruturas consistentes.
         long inicio = System.nanoTime();
         boolean removidoDaListaPorTelefone = listaPorTelefone.remover(new Contato("", telefone));
         long fim = System.nanoTime();
@@ -261,10 +309,11 @@ public class ProgramaContatos {
             return;
         }
 
-        // Removemos o contato das duas listas, atualizamos os dados e
+        // Removemos o contato das duas coleções, atualizamos os dados e
         // inserimos de novo, em vez de apenas sobrescrever os campos.
-        // Isso evita que, numa lista ordenada, o contato fique "preso" na
-        // posição antiga depois que seu nome ou telefone muda.
+        // Isso evita que, numa estrutura ordenada (lista ordenada ou árvore),
+        // o contato fique "preso" na posição antiga depois que seu nome ou
+        // telefone muda.
         listaPorNome.remover(encontrado);
         listaPorTelefone.remover(encontrado);
 
@@ -278,7 +327,7 @@ public class ProgramaContatos {
     }
 
     // Exibe a quantidade total de contatos antes de encerrar. Usamos a
-    // listaPorTelefone como referência porque ela nunca tem telefones
+    // coleção por telefone como referência porque ela nunca tem telefones
     // duplicados, então sua contagem reflete o total real de contatos.
     private void sair() {
         System.out.println("Quantidade total de contatos: " + listaPorTelefone.quantidadeNos());
