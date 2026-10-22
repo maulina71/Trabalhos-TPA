@@ -1,20 +1,16 @@
 package arvorebinaria;
 
-/**
- * Nó de uma árvore binária. Cada nó guarda um valor e
- * referências para os filhos esquerdo e direito.
- * @param <T> Tipo genérico do valor armazenado
- */
 public class NoArvore<T> {
-
     private T valor;
     private NoArvore<T> esq;
     private NoArvore<T> dir;
+    private int altura;
 
     public NoArvore(T valor) {
         this.valor = valor;
         this.esq = null;
         this.dir = null;
+        this.altura = 0;
     }
 
     public T getValor() { return valor; }
@@ -25,6 +21,7 @@ public class NoArvore<T> {
 
     public NoArvore<T> getDir() { return dir; }
     public void setDir(NoArvore<T> dir) { this.dir = dir; }
+
+    public int getAltura() { return altura; }
+    public void setAltura(int altura) { this.altura = altura; }
 }
-
-
