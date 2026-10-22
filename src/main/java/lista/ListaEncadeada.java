@@ -1,5 +1,6 @@
 package lista;
 
+import colecao.IColecao;
 import java.util.Comparator;
 /**
  * @param <T> Tipo genérico dos elementos
