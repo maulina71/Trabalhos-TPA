@@ -42,7 +42,8 @@ public class GeradorArquivosOrdenados {
 
             for (int i = 0; i < quantidade; i++) {
                 String nome = NOMES[random.nextInt(NOMES.length)] + " "
-                            + SOBRENOMES[random.nextInt(SOBRENOMES.length)];
+                    + SOBRENOMES[random.nextInt(SOBRENOMES.length)]
+                + " " + i;
                 // i cresce de 0 até quantidade-1, formatado com 9 dígitos.
                 // Resultado: ordem lexicográfica == ordem numérica.
                 String telefone = String.format("%09d", i);
