@@ -65,7 +65,7 @@ public class ArvoreBinaria<T> extends ArvoreBinariaBase<T> {
                 }
                 atual = atual.getDir();
             }
-        }
+        }  //*O(h) — h = altura da árvore.
     }
 
     /**
@@ -86,10 +86,9 @@ public class ArvoreBinaria<T> extends ArvoreBinariaBase<T> {
     }
 
     /**
-     * Remove um valor pela chave.
      * Implementação ITERATIVA, para não estourar a pilha em árvores
      * degeneradas (profundidade ~ n).
-     * Complexidade: O(h).
+     * Complexidade: O(h). h = altura da árvore.
      */
     @Override
     public boolean remover(T valor) {
@@ -179,7 +178,7 @@ public class ArvoreBinaria<T> extends ArvoreBinariaBase<T> {
             }
         }
         return altura;
-    }
+    }  /*O(n) — percorre todos os nós.
 
     /**
      * Caminhamento em nível (BFS). Cada nível em uma linha.
@@ -213,7 +212,7 @@ public class ArvoreBinaria<T> extends ArvoreBinariaBase<T> {
         sb.append("]");
         return sb.toString();
     }
-
+ //*O(n) — percorre todos os nós.
     /**
      * Caminhamento em ordem (in-order) ITERATIVO.
      * Formato: [e1,e2,...,eN]
